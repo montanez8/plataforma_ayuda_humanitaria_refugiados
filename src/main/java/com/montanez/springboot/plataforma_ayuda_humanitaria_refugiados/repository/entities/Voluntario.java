@@ -4,6 +4,8 @@ import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
@@ -23,6 +25,7 @@ public class Voluntario {
     private Long id;
     private String nombre;
     @Column(name = "tipo_voluntario")
+    @Enumerated(EnumType.STRING)
     private TipoVoluntario tipoVoluntario;
     private boolean disponibilidad;
     private int numeroTrabajos;
