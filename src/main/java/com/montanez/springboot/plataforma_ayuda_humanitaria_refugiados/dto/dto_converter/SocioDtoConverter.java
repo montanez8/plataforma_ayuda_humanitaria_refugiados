@@ -2,13 +2,13 @@ package com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_
 
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.SocioDTO;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.entities.Socio;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+@AllArgsConstructor
 public class SocioDtoConverter {
-    @Autowired
     private ModelMapper modelMapper;
 
     public SocioDTO convertToDto(Socio socio) {

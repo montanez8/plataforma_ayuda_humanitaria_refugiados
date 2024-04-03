@@ -4,14 +4,13 @@ import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.Socio
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.entities.Socio;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SocioService {
-    Socio save(Socio socio);
+    List<SocioDTO> findAll();
 
-     List<SocioDTO> getSocios();
-
-     SocioDTO getSocioById(Long id);
-     void delete(Long id);
-
-     Socio update(Long id ,Socio socio);
+    Optional<SocioDTO> findById(Long id);
+    SocioDTO save(Socio socio);
+    Optional<String>  update(Long id ,Socio socio);
+     Optional<String> delete(Long id);
 }

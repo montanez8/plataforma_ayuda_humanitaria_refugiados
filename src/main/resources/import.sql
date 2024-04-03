@@ -1,7 +1,7 @@
 -- Insertar datos en la tabla Sede
-INSERT INTO sede (domicilio, director) VALUES ('Transversal 27 No. 100A-34, Barrio Ciudad Salitre , Bogota', 'sede principal');
-INSERT INTO sede (domicilio, director) VALUES ('Avenida Boyacá No. 78-90, Barrio Kennedy', 'Sede Kennedy');
-INSERT INTO sede (domicilio, director) VALUES ('Plaza Mayor', 'Sede Mayor');
+INSERT INTO sede (nombre,domicilio, director) VALUES ('Sede Principal','Transversal 27 No. 100A-34, Barrio Ciudad Salitre , Bogota', 'Laura Santos');
+INSERT INTO sede (nombre,domicilio, director) VALUES ('Sede Mayor','Avenida Boyacá No. 78-90, Barrio Kennedy', 'Mario Gomez');
+INSERT INTO sede (nombre,domicilio, director) VALUES ('Sede Mayor','Plaza Mayor','Julian Garcia' );
 
 -- Insertar datos en la tabla Socio
 INSERT INTO socio (nombre, cuenta_bancaria, fecha_pago, tipo_cuota, sede_id) VALUES ('Carlos Morales', '1234567890', '2023-04-01', 'MINIMA', 1);

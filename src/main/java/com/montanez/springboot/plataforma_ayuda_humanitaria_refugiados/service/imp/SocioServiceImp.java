@@ -5,58 +5,75 @@ import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_c
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.SocioRepository;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.entities.Socio;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.service.SocioService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
+@AllArgsConstructor
 public class SocioServiceImp implements SocioService {
-    @Autowired
+
     private SocioRepository socioRepository;
-    @Autowired
+
     private SocioDtoConverter socioDtoConverter;
 
 
     @Override
-    public Socio save(Socio socio) {
-        return socioRepository.save(socio);
-    }
-
-    @Override
-    public List<SocioDTO> getSocios() {
+    @Transactional(readOnly = true)
+    public List<SocioDTO> findAll() {
         List<SocioDTO> socioDTOS = new ArrayList<>();
-        socioRepository.findAll().forEach(socio -> {
-            socioDTOS.add(socioDtoConverter.convertToDto(socio));
-        });
+        socioRepository.findAll().forEach(socio -> socioDTOS.add(socioDtoConverter.convertToDto(socio)));
         return socioDTOS;
     }
 
-
     @Override
-    public SocioDTO getSocioById(Long id) {
-        return socioDtoConverter.convertToDto(
-                socioRepository.findById(id).orElse(null));
+    @Transactional(readOnly = true)
+    public Optional<SocioDTO> findById(Long id) {
+        Optional<Socio> socio = socioRepository.findById(id);
+        if (socio.isEmpty()) {
+            return Optional.empty();
+
+        }
+        return socio.map(socioDtoConverter::convertToDto);
     }
 
     @Override
-    public void delete(Long id) {
-        socioRepository.deleteById(id);
+    @Transactional
+    public SocioDTO save(Socio socio) {
+        return socioDtoConverter.convertToDto(socioRepository.save(socio));
+
     }
 
+
     @Override
-    public Socio update(Long id, Socio socio) {
-        Socio socioUpdate = socioRepository.findById(id).orElse(null);
-        if (socioUpdate != null) {
+    @Transactional
+    public Optional<String>  update(Long id, Socio socio) {
+        return socioRepository.findById(id)
+                .map(socioUpdate -> {
             socioUpdate.setNombre(socio.getNombre());
             socioUpdate.setCuentaBancaria(socio.getCuentaBancaria());
             socioUpdate.setFechaPago(socio.getFechaPago());
             socioUpdate.setTipoCuota(socio.getTipoCuota());
             socioUpdate.setSede(socio.getSede());
             socioRepository.save(socioUpdate);
+            return "Socio actualizado";
+        });
+    }
+
+    @Override
+    @Transactional
+    public Optional<String> delete(Long id) {
+        Optional<Socio> socio = socioRepository.findById(id);
+        if (socio.isPresent()) {
+            socioRepository.deleteById(id);
+            return Optional.of("Socio eliminado");
+        } else {
+            return Optional.of("No se encontró el socio con el id: " + id + " solicitado");
         }
-        return socioUpdate;
     }
 }
