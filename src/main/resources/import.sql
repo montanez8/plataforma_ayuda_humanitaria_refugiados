@@ -15,7 +15,7 @@ INSERT INTO voluntario (nombre, tipo_voluntario, disponibilidad, numero_trabajos
 INSERT INTO voluntario (nombre, tipo_voluntario, disponibilidad, numero_trabajos) VALUES ('Polo MOreno', 'ADMINISTRATIVO', false, 3);
 INSERT INTO voluntario (nombre, tipo_voluntario, disponibilidad, numero_trabajos) VALUES ('Francia Marquez', 'SANITARIO', true, 8);
 INSERT INTO voluntario (nombre, tipo_voluntario, disponibilidad, numero_trabajos) VALUES ('Yurley Galvis', 'ADMINISTRATIVO', true, 2);
-INSERT INTO voluntario (nombre, tipo_voluntario, disponibilidad, numero_trabajos) VALUES ('Diana Ochoa', 'SANITARIO', false, 6);
+INSERT INTO voluntario (nombre, tipo_voluntario, disponibilidad, numero_trabajos) VALUES ('Maria Ochoa', 'SANITARIO', false, 6);
 
 
 -- Insertar datos en la tabla Envio
@@ -58,3 +58,9 @@ INSERT INTO voluntario_sedes (voluntario_id, sedes_id) VALUES (4, 2);
 INSERT INTO voluntario_sedes (voluntario_id, sedes_id) VALUES (4, 3);
 INSERT INTO voluntario_sedes (voluntario_id, sedes_id) VALUES (5, 1);
 INSERT INTO voluntario_sedes (voluntario_id, sedes_id) VALUES (5, 3);
+
+-- Insertar datos en la tabla rol
+INSERT INTO rol (nombre) VALUES ('Admin');
+INSERT INTO rol (nombre) VALUES ('Director');
+INSERT INTO rol (nombre) VALUES ('Auxiliar');
+
