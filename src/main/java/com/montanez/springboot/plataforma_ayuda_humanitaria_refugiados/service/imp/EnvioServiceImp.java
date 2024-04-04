@@ -73,21 +73,46 @@ public class EnvioServiceImp implements EnvioService {
     }
 
     @Override
-    public Optional<String> update(Long id, EnvioDTO envio) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    @Transactional
+    public Optional<EnvioDTO> update(Long id, EnvioDTO envioDto) {
+        return envioRepository.findById(id).map(envio -> {
+            // Actualizar los campos de envio con los valores de envioDto
+            envio.setCodigo(envioDto.getCodigo());
+            envio.setDestino(envioDto.getDestino());
+            envio.setFechaEnvio(envioDto.getFechaEnvio());
+
+            // Actualizar la lista de Sedes
+            List<Long> distinctSedes = envioDto.getSedesIds().stream().distinct().toList();
+            List<Sede> sedes = distinctSedes.stream()
+                    .map(sedeId -> sedeRepository.findById(sedeId)
+                            .orElseThrow(() -> new EntityNotFoundException("Sede con id " + sedeId + " no encontrada")))
+                    .collect(Collectors.toList());
+            envio.setSedes(sedes);
+
+            // Actualizar la lista de Voluntarios
+            List<Long> distinctVoluntarios = envioDto.getVoluntariosIds().stream().distinct().toList();
+            List<Voluntario> voluntarios = distinctVoluntarios.stream()
+                    .map(voluntarioId -> voluntarioRepository.findById(voluntarioId)
+                            .orElseThrow(() -> new EntityNotFoundException(
+                                    "Voluntario con id " + voluntarioId + " no encontrado")))
+                    .collect(Collectors.toList());
+            envio.setVoluntarios(voluntarios);
+
+            // Guardar el envio actualizado en la base de datos
+            Envio updatedEnvio = envioRepository.save(envio);
+
+            // Convertir el envio actualizado a DTO y devolverlo
+            return converter.convertToDto(updatedEnvio);
+        });
     }
 
     @Override
     public Optional<String> delete(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        return envioRepository.findById(id).map(envio -> {
+            envioRepository.delete(envio);
+            return "Envio con id " + id + " eliminado correctamente";
+        })
+                .or(() -> Optional.of("Envio con id " + id + " no encontrado"));
     }
-
-    // @Override
-    // public EnvioDTO save(EnvioDTO envio) {
-    // // TODO Auto-generated method stub
-    // throw new UnsupportedOperationException("Unimplemented method 'save'");
-    // }
 
 }

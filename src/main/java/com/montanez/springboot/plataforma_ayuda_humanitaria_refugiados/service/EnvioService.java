@@ -13,7 +13,7 @@ public interface EnvioService {
 
     EnvioDTO save(EnvioDTO envio);
 
-    Optional<String> update(Long id, EnvioDTO envio);
+    Optional<EnvioDTO> update(Long id, EnvioDTO envio);
 
     Optional<String> delete(Long id);
 

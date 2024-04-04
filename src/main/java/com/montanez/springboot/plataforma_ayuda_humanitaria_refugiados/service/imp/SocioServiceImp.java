@@ -1,18 +1,21 @@
 package com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.service.imp;
 
-import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.SocioDTO;
-import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_converter.SocioDtoConverter;
-import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.SocioRepository;
-import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.entities.Socio;
-import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.service.SocioService;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.SocioDTO;
+import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_converter.SocioDtoConverter;
+import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.SocioRepository;
+import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.entities.Cuota;
+import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.entities.Socio;
+import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.service.SocioService;
+
+import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
@@ -21,7 +24,6 @@ public class SocioServiceImp implements SocioService {
     private SocioRepository socioRepository;
 
     private SocioDtoConverter socioDtoConverter;
-
 
     @Override
     @Transactional(readOnly = true)
@@ -49,20 +51,19 @@ public class SocioServiceImp implements SocioService {
 
     }
 
-
     @Override
     @Transactional
-    public Optional<String>  update(Long id, Socio socio) {
+    public Optional<String> update(Long id, Socio socio) {
         return socioRepository.findById(id)
                 .map(socioUpdate -> {
-            socioUpdate.setNombre(socio.getNombre());
-            socioUpdate.setCuentaBancaria(socio.getCuentaBancaria());
-            socioUpdate.setFechaPago(socio.getFechaPago());
-            socioUpdate.setTipoCuota(socio.getTipoCuota());
-            socioUpdate.setSede(socio.getSede());
-            socioRepository.save(socioUpdate);
-            return "Socio actualizado";
-        });
+                    socioUpdate.setNombre(socio.getNombre());
+                    socioUpdate.setCuentaBancaria(socio.getCuentaBancaria());
+                    socioUpdate.setFechaPago(socio.getFechaPago());
+                    socioUpdate.setTipoCuota(socio.getTipoCuota());
+                    socioUpdate.setSede(socio.getSede());
+                    socioRepository.save(socioUpdate);
+                    return "Socio actualizado";
+                });
     }
 
     @Override
@@ -74,6 +75,28 @@ public class SocioServiceImp implements SocioService {
             return Optional.of("Socio eliminado");
         } else {
             return Optional.of("No se encontró el socio con el id: " + id + " solicitado");
+        }
+    }
+
+    @Override
+    public List<SocioDTO> findByTipoCuota(Cuota cuota) {
+        List<Socio> socios = socioRepository.findByTipoCuota(cuota);
+        return socios.stream()
+                .map(socio -> socioDtoConverter.convertToDto(socio))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<List<SocioDTO>> findByTipoCuota(String tipoCuota) {
+        try {
+            Cuota cuota = Cuota.valueOf(tipoCuota.toUpperCase());
+            List<Socio> socios = socioRepository.findByTipoCuota(cuota);
+            List<SocioDTO> socioDTOs = socios.stream()
+                    .map(socio -> socioDtoConverter.convertToDto(socio))
+                    .collect(Collectors.toList());
+            return Optional.of(socioDTOs);
+        } catch (IllegalArgumentException e) {
+            return Optional.empty();
         }
     }
 }
