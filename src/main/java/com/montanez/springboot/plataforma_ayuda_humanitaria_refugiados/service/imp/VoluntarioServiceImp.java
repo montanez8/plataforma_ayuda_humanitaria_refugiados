@@ -9,13 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.VoluntarioDTO;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_converter.VoluntarioDtoConverter;
-import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.exception.SedeNotFoundException;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.SedeRepository;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.VoluntarioRepository;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.entities.Sede;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.entities.Voluntario;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.service.VoluntarioService;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -50,7 +50,7 @@ public class VoluntarioServiceImp implements VoluntarioService {
         List<Long> distinctSedes = voluntarioDto.getSedes().stream().distinct().toList();
         List<Sede> sedes = distinctSedes.stream()
                 .map(sedeId -> sedeRepository.findById(sedeId)
-                        .orElseThrow(() -> new SedeNotFoundException("Sede con id " + sedeId + " no encontrada")))
+                        .orElseThrow(() -> new EntityNotFoundException("Sede con id " + sedeId + " no encontrada")))
                 .collect(Collectors.toList());
         voluntario.setSedes(sedes);
         Voluntario savedVoluntario = voluntarioRepository.save(voluntario);
@@ -58,12 +58,38 @@ public class VoluntarioServiceImp implements VoluntarioService {
     }
 
     @Override
-    public Optional<String> update(Long id, VoluntarioDTO voluntario) {
-        return Optional.empty();
+    @Transactional
+    public Optional<String> update(Long id, VoluntarioDTO voluntarioDto) {
+        Voluntario voluntarioExistente = voluntarioRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Voluntario con id " + id + " no encontrado"));
+        voluntarioExistente.setNombre(voluntarioDto.getNombre());
+        voluntarioExistente.setTipoVoluntario(voluntarioDto.getTipoVoluntario());
+        voluntarioExistente.setDisponibilidad(voluntarioDto.isDisponibilidad());
+        voluntarioExistente.setNumeroTrabajos(voluntarioDto.getNumeroTrabajos());
+        // Actualizar las sedes
+        List<Long> distinctSedes = voluntarioDto.getSedes().stream().distinct().toList();
+        List<Sede> sedes = distinctSedes.stream()
+                .map(sedeId -> sedeRepository.findById(sedeId)
+                        .orElseThrow(() -> new EntityNotFoundException("Sede con id " + sedeId + " no encontrada")))
+                .collect(Collectors.toList());
+        voluntarioExistente.setSedes(sedes);
+        voluntarioRepository.save(voluntarioExistente);
+        return Optional.of("Voluntario actualizado con éxito");
     }
 
     @Override
     public Optional<String> delete(Long id) {
-        return Optional.empty();
+        if (voluntarioRepository.existsById(id)) {
+            voluntarioRepository.deleteById(id);
+            return Optional.of("Voluntario eliminado con éxito");
+        }
+        return Optional.of("Voluntario con id " + id + " no encontrado");
+    }
+
+    @Override
+    public VoluntarioDTO findVoluntarioById(Long id) {
+        return voluntarioRepository.findById(id)
+                .map(voluntario -> converter.convertToDto(voluntario))
+                .orElseThrow(() -> new EntityNotFoundException("Voluntario con id " + id + " no encontrado"));
     }
 }

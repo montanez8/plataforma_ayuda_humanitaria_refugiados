@@ -1,11 +1,18 @@
 package com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.entities;
 
-import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Entity
 @Data
@@ -19,8 +26,9 @@ public class Sede {
     private String nombre;
     private String domicilio;
     private String director;
-
     @OneToMany(mappedBy = "sede")
     private List<Socio> socios;
+    @ManyToMany(mappedBy = "sedes")
+    private List<Voluntario> voluntarios = new ArrayList<>();
 
 }

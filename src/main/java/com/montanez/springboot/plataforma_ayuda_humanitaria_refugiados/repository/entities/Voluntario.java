@@ -1,11 +1,21 @@
 package com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.entities;
 
-import jakarta.persistence.*;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Entity
 @Data
@@ -22,7 +32,7 @@ public class Voluntario {
     private TipoVoluntario tipoVoluntario;
     private boolean disponibilidad;
     private int numeroTrabajos;
-
-    @ManyToMany
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(name = "voluntario_sede", joinColumns = @JoinColumn(name = "voluntario_id"), inverseJoinColumns = @JoinColumn(name = "sede_id"))
     private List<Sede> sedes;
 }
