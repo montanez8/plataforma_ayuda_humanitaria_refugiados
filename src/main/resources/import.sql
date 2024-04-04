@@ -1,7 +1,14 @@
 -- Insertar datos en la tabla Sede
-INSERT INTO sede (nombre,domicilio, director) VALUES ('Sede Principal','Transversal 27 No. 100A-34, Barrio Ciudad Salitre , Bogota', 'Laura Santos');
-INSERT INTO sede (nombre,domicilio, director) VALUES ('Sede Mayor','Avenida Boyacá No. 78-90, Barrio Kennedy', 'Mario Gomez');
-INSERT INTO sede (nombre,domicilio, director) VALUES ('Sede Mayor','Plaza Mayor','Julian Garcia' );
+INSERT INTO sede (nombre,domicilio, director) VALUES ('Campo de Refugiados de Dadaab','Condado de Dadaab, Kenia', 'Sr. John ONeill');
+INSERT INTO sede (nombre,domicilio, director) VALUES ('Campo de Refugiados de Kakuma','Condado de Turkana, Kenia', 'Sra. Angelina Jolie');
+INSERT INTO sede (nombre,domicilio, director) VALUES ('Campo de Refugiados de Bidibidi','Yumbe, Uganda', 'Sr. Arnauld Akodjenou');
+INSERT INTO sede (nombre,domicilio, director) VALUES ('Campo de Refugiados de Kutupalong','Coxs Bazar Bangladés', 'Sr. Filippo Grandi');
+INSERT INTO sede (nombre,domicilio, director) VALUES ('Campo de Refugiados de Zaatari','Gobernación de Mafraq, Jordania', 'Sr. Andrew Harper');
+INSERT INTO sede (nombre,domicilio, director) VALUES ('Campo de Refugiados de Moria','Isla de Lesbos, Grecia', 'Sra. Catherine Hamon');
+INSERT INTO sede (nombre,domicilio, director) VALUES ('Campo de Refugiados de Domiz','Dohuk, Iraq', 'Sr. Jean-Nicolas Beuze');
+INSERT INTO sede (nombre,domicilio, director) VALUES ('Campo de Refugiados de Yida','Provincia de Jizan, Arabia Saudita', 'Sr. Amin Awad');
+INSERT INTO sede (nombre,domicilio, director) VALUES ('Campo de Refugiados de Maiwut','Estado de Unity, Sudán del Sur', 'Sr. Toby Lanzer');
+INSERT INTO sede (nombre,domicilio, director) VALUES ('Campo de Refugiados de Palestinia','Gobernación de Damasco, Siria', 'Sr. Pierre Krähenbühl');
 
 -- Insertar datos en la tabla Socio
 INSERT INTO socio (nombre, cuenta_bancaria, fecha_pago, tipo_cuota, sede_id) VALUES ('Carlos Morales', '1234567890', '2023-04-01', 'MINIMA', 1);
@@ -49,15 +56,15 @@ INSERT INTO envio_voluntario (envio_id, voluntario_id) VALUES (5, 2);
 INSERT INTO envio_voluntario (envio_id, voluntario_id) VALUES (5, 5);
 
 -- Insertar datos en la tabla voluntario_sedes
-INSERT INTO voluntario_sedes (voluntario_id, sedes_id) VALUES (1, 1);
-INSERT INTO voluntario_sedes (voluntario_id, sedes_id) VALUES (1, 2);
-INSERT INTO voluntario_sedes (voluntario_id, sedes_id) VALUES (2, 2);
-INSERT INTO voluntario_sedes (voluntario_id, sedes_id) VALUES (3, 1);
-INSERT INTO voluntario_sedes (voluntario_id, sedes_id) VALUES (3, 3);
-INSERT INTO voluntario_sedes (voluntario_id, sedes_id) VALUES (4, 2);
-INSERT INTO voluntario_sedes (voluntario_id, sedes_id) VALUES (4, 3);
-INSERT INTO voluntario_sedes (voluntario_id, sedes_id) VALUES (5, 1);
-INSERT INTO voluntario_sedes (voluntario_id, sedes_id) VALUES (5, 3);
+INSERT INTO voluntario_sede (voluntario_id, sede_id) VALUES (1, 1);
+INSERT INTO voluntario_sede (voluntario_id, sede_id) VALUES (1, 2);
+INSERT INTO voluntario_sede (voluntario_id, sede_id) VALUES (2, 2);
+INSERT INTO voluntario_sede (voluntario_id, sede_id) VALUES (3, 1);
+INSERT INTO voluntario_sede (voluntario_id, sede_id) VALUES (3, 3);
+INSERT INTO voluntario_sede (voluntario_id, sede_id) VALUES (4, 2);
+INSERT INTO voluntario_sede (voluntario_id, sede_id) VALUES (4, 3);
+INSERT INTO voluntario_sede (voluntario_id, sede_id) VALUES (5, 1);
+INSERT INTO voluntario_sede (voluntario_id, sede_id) VALUES (5, 3);
 
 -- Insertar datos en la tabla rol
 INSERT INTO rol (nombre) VALUES ('Admin');

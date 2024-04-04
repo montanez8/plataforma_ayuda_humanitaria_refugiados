@@ -10,7 +10,10 @@ public interface SocioService {
     List<SocioDTO> findAll();
 
     Optional<SocioDTO> findById(Long id);
+
     SocioDTO save(Socio socio);
-    Optional<String>  update(Long id ,Socio socio);
-     Optional<String> delete(Long id);
+
+    Optional<String> update(Long id, Socio socio);
+
+    Optional<String> delete(Long id);
 }
