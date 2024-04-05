@@ -14,6 +14,7 @@ public class VoluntarioDTO {
     private String nombre;
     private TipoVoluntario tipoVoluntario;
     @NotNull(message = "La disponibilidad no puede estar vacía")
+    private String profesion;
     private boolean disponibilidad;
     @NotEmpty(message = "El número de trabajos no puede estar vacío")
     private int numeroTrabajos;

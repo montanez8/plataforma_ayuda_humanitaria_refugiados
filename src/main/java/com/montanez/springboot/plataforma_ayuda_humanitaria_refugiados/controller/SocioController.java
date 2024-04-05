@@ -18,6 +18,9 @@ import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.Socio
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.entities.Socio;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.service.SocioService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
@@ -31,6 +34,7 @@ public class SocioController {
     private SocioService socioService;
 
     @GetMapping // http://localhost:8080/api/socio
+    @Operation(summary = "Obtener todos los socios", description = "Obtiene todos los socios registrados en la base de datos")
     public List<SocioDTO> getSocios() {
         return socioService.findAll();
     }
@@ -46,9 +50,10 @@ public class SocioController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    @PostMapping // http://localhost:8080/api/socio
-    public ResponseEntity<?> save(@Valid @RequestBody Socio socio) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(socioService.save(socio));
+    @PostMapping
+    @Operation(summary = "Guardar un nuevo socio", description = "Guarda un nuevo socio en la base de datos")
+    public ResponseEntity<?> save(@RequestBody @Valid Socio socio) {
+        return ResponseEntity.ok(socioService.save(socio));
     }
 
     @PutMapping("/{id}") // http://localhost:8080/api/socio/1
@@ -64,20 +69,11 @@ public class SocioController {
         return socio.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // @GetMapping("/cuota/{tipoCuota}") //
-    // http://localhost:8080/api/socios/cuota/tipoCuota
-    // public ResponseEntity<List<SocioDTO>> getSociosByTipoCuota(@PathVariable
-    // String tipoCuota) {
-    // try {
-    // Cuota cuota = Cuota.valueOf(tipoCuota.toUpperCase());
-    // List<SocioDTO> socios = socioService.findByTipoCuota(cuota);
-    // return ResponseEntity.ok(socios);
-    // } catch (IllegalArgumentException e) {
-    // return ResponseEntity.badRequest().build();
-    // }
-    // }
     @GetMapping("/cuota/{tipoCuota}") // http://localhost:8080/api/socios/cuota/tipoCuota
-    public ResponseEntity<?> getSociosByTipoCuota(@PathVariable String tipoCuota) {
+    @Operation(summary = "Obtener socios por tipo de cuota", description = "Obtiene todos los socios registrados en la base de datos que tengan el tipo de cuota ingresado")
+    public ResponseEntity<?> getSociosByTipoCuota(
+            @Parameter(description = "Tipo de cuota a buscar", required = true) @PathVariable @Schema(allowableValues = {
+                    "MINIMA", "MEDIA", "MAXIMA" }) String tipoCuota) {
         Optional<List<SocioDTO>> socios = socioService.findByTipoCuota(tipoCuota);
         if (socios.isPresent()) {
             return ResponseEntity.ok(socios.get());

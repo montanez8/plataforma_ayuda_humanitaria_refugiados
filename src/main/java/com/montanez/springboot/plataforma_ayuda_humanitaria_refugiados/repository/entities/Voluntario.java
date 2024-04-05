@@ -30,6 +30,7 @@ public class Voluntario {
     @Column(name = "tipo_voluntario")
     @Enumerated(EnumType.STRING)
     private TipoVoluntario tipoVoluntario;
+    private String profesion;
     private boolean disponibilidad;
     private int numeroTrabajos;
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })

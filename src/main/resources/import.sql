@@ -17,12 +17,14 @@ INSERT INTO socio (nombre, cuenta_bancaria, fecha_pago, tipo_cuota, sede_id) VAL
 INSERT INTO socio (nombre, cuenta_bancaria, fecha_pago, tipo_cuota, sede_id) VALUES ('Ana Polonia', '1111111111', '2023-06-10', 'MINIMA', 1);
 INSERT INTO socio (nombre, cuenta_bancaria, fecha_pago, tipo_cuota, sede_id) VALUES ('Oscar Perez', '2222222222', '2023-07-05', 'MEDIA', 2);
 
--- Insertar datos en la tabla Voluntario
-INSERT INTO voluntario (nombre, tipo_voluntario, disponibilidad, numero_trabajos) VALUES ('Jacinto Rodriguez', 'SANITARIO', true, 5);
-INSERT INTO voluntario (nombre, tipo_voluntario, disponibilidad, numero_trabajos) VALUES ('Polo MOreno', 'ADMINISTRATIVO', false, 3);
-INSERT INTO voluntario (nombre, tipo_voluntario, disponibilidad, numero_trabajos) VALUES ('Francia Marquez', 'SANITARIO', true, 8);
-INSERT INTO voluntario (nombre, tipo_voluntario, disponibilidad, numero_trabajos) VALUES ('Yurley Galvis', 'ADMINISTRATIVO', true, 2);
-INSERT INTO voluntario (nombre, tipo_voluntario, disponibilidad, numero_trabajos) VALUES ('Maria Ochoa', 'SANITARIO', false, 6);
+--- INSERT con campo "profesion"
+
+INSERT INTO voluntario (nombre, tipo_voluntario, profesion, disponibilidad, numero_trabajos) VALUES ('Jacinto Rodriguez', 'SANITARIO', 'medico', true, 5);
+INSERT INTO voluntario (nombre, tipo_voluntario, profesion, disponibilidad, numero_trabajos) VALUES ('Polo Moreno', 'ADMINISTRATIVO', 'abogado', false, 3);
+INSERT INTO voluntario (nombre, tipo_voluntario, profesion, disponibilidad, numero_trabajos) VALUES ('Francia Marquez', 'SANITARIO', 'enfermera', true, 8);
+INSERT INTO voluntario (nombre, tipo_voluntario, profesion, disponibilidad, numero_trabajos) VALUES ('Yurley Galvis', 'ADMINISTRATIVO', 'contadora', true, 2);
+INSERT INTO voluntario (nombre, tipo_voluntario, profesion, disponibilidad, numero_trabajos) VALUES ('Maria Ochoa', 'SANITARIO', 'psicologa', false, 6);
+
 
 
 -- Insertar datos en la tabla Envio
