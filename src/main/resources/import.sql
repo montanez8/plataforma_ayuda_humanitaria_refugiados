@@ -69,7 +69,12 @@ INSERT INTO voluntario_sede (voluntario_id, sede_id) VALUES (5, 1);
 INSERT INTO voluntario_sede (voluntario_id, sede_id) VALUES (5, 3);
 
 -- Insertar datos en la tabla rol
-INSERT INTO rol (nombre) VALUES ('Admin');
-INSERT INTO rol (nombre) VALUES ('Director');
-INSERT INTO rol (nombre) VALUES ('Auxiliar');
+INSERT INTO rol (name) VALUES ('Admin');
+INSERT INTO rol (name) VALUES ('Director');
+INSERT INTO rol (name) VALUES ('Auxiliar');
 
+-- INSERT INTO usuario (username, password, enabled, admin) VALUES ('usuario1', 'contraseña1', true, false);
+INSERT INTO usuario (username, password, enabled) VALUES ('Admin', 'admin', true);
+-- INSERT INTO usuario (username, password, enabled, admin) VALUES ('usuario3', 'contraseña3', false, false);
+
+INSERT INTO users_roles (role_id, user_id) VALUES (1, 1);
