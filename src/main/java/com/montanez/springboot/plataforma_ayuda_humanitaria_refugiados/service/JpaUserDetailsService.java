@@ -1,54 +1,52 @@
-// package
-// com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.service;
+package com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.service;
 
-// import java.util.List;
-// import java.util.Optional;
-// import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.security.core.GrantedAuthority;
-// import org.springframework.security.core.authority.SimpleGrantedAuthority;
-// import org.springframework.security.core.userdetails.UserDetails;
-// import org.springframework.security.core.userdetails.UserDetailsService;
-// import
-// org.springframework.security.core.userdetails.UsernameNotFoundException;
-// import org.springframework.transaction.annotation.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-// import
-// com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.UsuarioRepositiry;
-// import
-// com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.entities.Usuario;
+import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.UsuarioRepositiry;
+import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.entities.Usuario;
 
-// public class JpaUserDetailsService implements UserDetailsService {
+import lombok.AllArgsConstructor;
 
-// @Autowired
-// private UsuarioRepositiry repository;
+@Service
+@AllArgsConstructor
+public class JpaUserDetailsService implements UserDetailsService {
 
-// @Transactional(readOnly = true)
-// @Override
-// public UserDetails loadUserByUsername(String username) throws
-// UsernameNotFoundException {
+    @Autowired
+    private UsuarioRepositiry repository;
 
-// Optional<Usuario> userOptional = repository.findByUsername(username);
+    @Transactional(readOnly = true)
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-// if (userOptional.isEmpty()) {
-// throw new UsernameNotFoundException(String.format("Username %s no existe en
-// el sistema!", username));
-// }
+        Optional<Usuario> userOptional = repository.findByUsername(username);
 
-// Usuario user = userOptional.orElseThrow();
+        if (userOptional.isEmpty()) {
+            throw new UsernameNotFoundException(String.format("Username %s no existe enel sistema!", username));
+        }
 
-// List<GrantedAuthority> authorities = user.getRoles().stream()
-// .map(role -> new SimpleGrantedAuthority(role.getName()))
-// .collect(Collectors.toList());
+        Usuario user = userOptional.orElseThrow();
 
-// return new
-// org.springframework.security.core.userdetails.User(user.getUsername(),
-// user.getPassword(),
-// user.isEnabled(),
-// true,
-// true,
-// true,
-// authorities);
-// }
-// }
+        List<GrantedAuthority> authorities = user.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName()))
+                .collect(Collectors.toList());
+
+        return new org.springframework.security.core.userdetails.User(user.getUsername(),
+                user.getPassword(),
+                user.isEnabled(),
+                true,
+                true,
+                true,
+                authorities);
+    }
+}
