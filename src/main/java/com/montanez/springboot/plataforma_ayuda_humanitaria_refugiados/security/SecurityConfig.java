@@ -13,7 +13,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
@@ -21,12 +23,25 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.exception.CustomAuthenticationEntryPoint;
+import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.handler.CustomAccessDeniedHandler;
+
 @Configuration
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new CustomAccessDeniedHandler();
+    }
+
+    @Bean
+    public AuthenticationEntryPoint authenticationEntryPoint() {
+        return new CustomAuthenticationEntryPoint();
     }
 
     @Bean
@@ -48,9 +63,12 @@ public class SecurityConfig {
         // http.csrf(csrf -> csrf.disable());
         http.csrf(csrf -> csrf
                 .csrfTokenRequestHandler(requestHandler)
-                // .ignoringRequestMatchers("/authenticate")
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
-                .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class);
+                .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
+                .exceptionHandling(exeptionHandling -> exeptionHandling
+                        .accessDeniedHandler(accessDeniedHandler())
+                        .authenticationEntryPoint(authenticationEntryPoint()));
+
         return http.build();
     }
 
