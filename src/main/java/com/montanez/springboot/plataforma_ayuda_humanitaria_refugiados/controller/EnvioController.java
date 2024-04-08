@@ -20,6 +20,7 @@ import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repositor
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.entities.Voluntario;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.service.EnvioService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -54,13 +55,13 @@ public class EnvioController {
     }
 
     @PostMapping // http://localhost:8080/api/envio
-    public ResponseEntity<EnvioDTO> saveEnvio(@RequestBody EnvioDTO envioDto) {
+    public ResponseEntity<EnvioDTO> saveEnvio(@Valid @RequestBody EnvioDTO envioDto) {
         EnvioDTO savedEnvioDto = envioService.save(envioDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedEnvioDto);
     }
 
     @PutMapping("/{id}") // http://localhost:8080/api/envio/id
-    public ResponseEntity<EnvioDTO> updateEnvio(@PathVariable Long id, @RequestBody EnvioDTO envioDto) {
+    public ResponseEntity<EnvioDTO> updateEnvio(@Valid @RequestBody EnvioDTO envioDto, @PathVariable Long id) {
         return envioService.update(id, envioDto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
