@@ -35,14 +35,20 @@ public class UsuarioServiceImp implements UsuarioService {
     @Transactional
     public Usuario save(Usuario user) {
 
-        Optional<Rol> optionalRoleUser = roleRepository.findByName("ROLE_USER");
         List<Rol> roles = new ArrayList<>();
-
-        optionalRoleUser.ifPresent(roles::add);
 
         if (user.isAdmin()) {
             Optional<Rol> optionalRoleAdmin = roleRepository.findByName("ROLE_ADMIN");
             optionalRoleAdmin.ifPresent(roles::add);
+        }
+
+        if (user.isDirector()) {
+            Optional<Rol> optionalRoleDirector = roleRepository.findByName("ROLE_DIRECTOR");
+            optionalRoleDirector.ifPresent(roles::add);
+        }
+        if (user.isAuxiliar()) {
+            Optional<Rol> optionalRoleAuxiliar = roleRepository.findByName("ROLE_AUXILIAR");
+            optionalRoleAuxiliar.ifPresent(roles::add);
         }
 
         user.setRoles(roles);

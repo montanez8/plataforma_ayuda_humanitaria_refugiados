@@ -8,6 +8,7 @@ public class PlataformaAyudaHumanitariaRefugiadosApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PlataformaAyudaHumanitariaRefugiadosApplication.class, args);
+
 	}
 
 }

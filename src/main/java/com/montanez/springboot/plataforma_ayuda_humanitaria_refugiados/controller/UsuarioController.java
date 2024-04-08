@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +31,7 @@ public class UsuarioController {
         return usuarioService.findAll();
     }
 
-    // @PreAuthorize("hasRole('ADMIN')")//.hasAnyRole("ADMIN", "USER")
+    @PreAuthorize("hasRole('ADMIN')") // .hasAnyRole("ADMIN", "USER")
     @PostMapping
     public ResponseEntity<?> create(@Valid @RequestBody Usuario user,
             BindingResult result) {
@@ -43,7 +44,7 @@ public class UsuarioController {
     @PostMapping("/register") // http://localhost:8080/api/usuario/register
     public ResponseEntity<?> register(@Valid @RequestBody Usuario user,
             BindingResult result) {
-        // user.setAdmin(false);
+        user.setAdmin(false);
         return create(user, result);
     }
 

@@ -28,21 +28,21 @@ INSERT INTO voluntario (nombre, tipo_voluntario, profesion, disponibilidad, nume
 
 
 -- Insertar datos en la tabla Envio
-INSERT INTO envio (codigo, destino, fecha_envio) VALUES ('ENV001', 'Carrera 5 # 6-50, Barrio Centro,Caquetá', '2023-04-10');
-INSERT INTO envio (codigo, destino, fecha_envio) VALUES ('ENV002', 'Calle 10 # 9-50, Barrio Centro,La Guajira', '2023-05-20');
-INSERT INTO envio (codigo, destino, fecha_envio) VALUES ('ENV003', 'Calle 7 # 7-50, Cocuy ,Boyaca', '2023-06-15');
-INSERT INTO envio (codigo, destino, fecha_envio) VALUES ('ENV004', 'El Charco, Nariño', '2023-07-05');
-INSERT INTO envio (codigo, destino, fecha_envio) VALUES ('ENV005', 'El Bagre, Antioquia', '2023-08-01');
+INSERT INTO envio (codigo, destino, fecha_envio) VALUES ('ENV001', 'Kenia', '2023-04-10');
+INSERT INTO envio (codigo, destino, fecha_envio) VALUES ('ENV002', 'Uganda', '2023-05-20');
+INSERT INTO envio (codigo, destino, fecha_envio) VALUES ('ENV003', 'Grecia', '2023-06-15');
+INSERT INTO envio (codigo, destino, fecha_envio) VALUES ('ENV004', 'Sudán del Sur', '2023-07-05');
+INSERT INTO envio (codigo, destino, fecha_envio) VALUES ('ENV005', 'siria', '2023-08-01');
 
 -- Insertar datos en la tabla envio_sede
 INSERT INTO envio_sede (envio_id, sede_id) VALUES (1, 1);
 INSERT INTO envio_sede (envio_id, sede_id) VALUES (1, 2);
-INSERT INTO envio_sede (envio_id, sede_id) VALUES (2, 2);
 INSERT INTO envio_sede (envio_id, sede_id) VALUES (2, 3);
-INSERT INTO envio_sede (envio_id, sede_id) VALUES (3, 1);
+INSERT INTO envio_sede (envio_id, sede_id) VALUES (2, 3);
+INSERT INTO envio_sede (envio_id, sede_id) VALUES (3, 6);
 INSERT INTO envio_sede (envio_id, sede_id) VALUES (3, 3);
-INSERT INTO envio_sede (envio_id, sede_id) VALUES (4, 2);
-INSERT INTO envio_sede (envio_id, sede_id) VALUES (5, 1);
+INSERT INTO envio_sede (envio_id, sede_id) VALUES (4, 9);
+INSERT INTO envio_sede (envio_id, sede_id) VALUES (5, 10);
 INSERT INTO envio_sede (envio_id, sede_id) VALUES (5, 3);
 
 -- Insertar datos en la tabla envio_voluntario
@@ -73,8 +73,10 @@ INSERT INTO roles (name) VALUES ('ROLE_ADMIN');
 INSERT INTO roles (name) VALUES ('ROLE_DIRECTOR');
 INSERT INTO roles (name) VALUES ('ROLE_AUXILIAR');
 
--- INSERT INTO usuario (username, password, enabled, admin) VALUES ('usuario1', 'contraseña1', true, false);
--- INSERT INTO usuario (username, password, enabled) VALUES ('Admin', 'admin', true);
--- INSERT INTO usuario (username, password, enabled, admin) VALUES ('usuario3', 'contraseña3', false, false);
+INSERT INTO users (username, password, enabled) VALUES ('admin', '$2a$10$nnOycCfiQLNxIfiCQxQXsO3M0rqSwdcXVsNWhwwKqyHFkJfoYlnoK', true);
+INSERT INTO users (username, password, enabled) VALUES ('director', '$2a$10$Js9RxyNCIJncEfMlrL2Efu0IyQAtSIjZJ2jB2FytDb.q/w9EcUjQ2', true);
+INSERT INTO users (username, password, enabled) VALUES ('auxiliar', '$2a$10$SxmmQXaWhtOp2jQdMpiEX.r7IRbu66KyEYmmgtFse1fJUmURNZHCe', true);
 
--- INSERT INTO users_roles (role_id, user_id) VALUES (1, 1);
+INSERT INTO users_roles (role_id, user_id) VALUES (1, 1);
+INSERT INTO users_roles (role_id, user_id) VALUES (2, 2);
+INSERT INTO users_roles (role_id, user_id) VALUES (3, 3);
