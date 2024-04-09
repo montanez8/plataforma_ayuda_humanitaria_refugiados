@@ -1,12 +1,22 @@
 package com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.entities;
 
-import jakarta.persistence.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Data
@@ -30,5 +40,8 @@ public class Envio {
     @ManyToMany
     @JoinTable(name = "envio_voluntario", joinColumns = @JoinColumn(name = "envio_id"), inverseJoinColumns = @JoinColumn(name = "voluntario_id"))
     private List<Voluntario> voluntarios;
+
+    @OneToMany(mappedBy = "envio")
+    private List<Material> materiales = new ArrayList<>();
 
 }

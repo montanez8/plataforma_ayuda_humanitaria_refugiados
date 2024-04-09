@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_informes.InformeEnvioMaterialDto;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_informes.InformeSedeDto;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_informes.InformeSocioDto;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_informes.InformeVoluntarioDto;
@@ -42,4 +43,12 @@ public class InformeController {
         List<InformeVoluntarioDto> informe = informeService.informeVoluntarios();
         return ResponseEntity.ok(informe);
     }
+
+    @GetMapping("/materiales")
+    @Operation(summary = "Informe Materiales", description = "Informe de los materiales y su cantidad")
+    public ResponseEntity<List<InformeEnvioMaterialDto>> obtenerInformeMateriales() {
+        List<InformeEnvioMaterialDto> informe = informeService.informeMaterial();
+        return ResponseEntity.ok(informe);
+    }
+
 }

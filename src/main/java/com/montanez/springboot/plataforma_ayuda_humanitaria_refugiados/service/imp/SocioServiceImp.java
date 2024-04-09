@@ -102,13 +102,13 @@ public class SocioServiceImp implements SocioService {
         }
     }
 
-    @Override
-    public List<SocioDTO> findByTipoCuota(Cuota cuota) {
-        List<Socio> socios = socioRepository.findByTipoCuota(cuota);
-        return socios.stream()
-                .map(socio -> socioDtoConverter.convertToDto(socio))
-                .collect(Collectors.toList());
-    }
+    // @Override
+    // public List<SocioDTO> findByTipoCuota(Cuota cuota) {
+    // List<Socio> socios = socioRepository.findByTipoCuota(cuota);
+    // return socios.stream()
+    // .map(socio -> socioDtoConverter.convertToDto(socio))
+    // .collect(Collectors.toList());
+    // }
 
     @Override
     public Optional<List<SocioDTO>> findByTipoCuota(String tipoCuota) {

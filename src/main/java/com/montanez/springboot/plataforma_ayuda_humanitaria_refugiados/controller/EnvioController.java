@@ -15,21 +15,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.EnvioDTO;
+import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.MaterialDTO;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.entities.Envio;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.entities.Sede;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.entities.Voluntario;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.service.EnvioService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("api/envio")
+
 public class EnvioController {
     private EnvioService envioService;
 
     @GetMapping // http://localhost:8080/api/envio
+    @ApiResponse(responseCode = "200", description = "Listado de envios")
+    @Operation(summary = "Listar envios", description = "Listar todos los envios")
     public ResponseEntity<List<EnvioDTO>> getAllEnvios() {
         List<Envio> envios = envioService.findAll();
 
@@ -41,6 +47,12 @@ public class EnvioController {
             dto.setFechaEnvio(envio.getFechaEnvio());
             dto.setSedesIds(envio.getSedes().stream().map(Sede::getId).collect(Collectors.toList()));
             dto.setVoluntariosIds(envio.getVoluntarios().stream().map(Voluntario::getId).collect(Collectors.toList()));
+            dto.setMateriales(envio.getMateriales().stream().map(material -> {
+                MaterialDTO materialDto = new MaterialDTO();
+                materialDto.setNombre(material.getNombre());
+                materialDto.setCantidad(material.getCantidad());
+                return materialDto;
+            }).collect(Collectors.toList()));
             return dto;
         }).collect(Collectors.toList());
 

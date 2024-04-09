@@ -34,6 +34,22 @@ INSERT INTO envio (codigo, destino, fecha_envio) VALUES ('ENV003', 'Grecia', '20
 INSERT INTO envio (codigo, destino, fecha_envio) VALUES ('ENV004', 'Sudán del Sur', '2023-07-05');
 INSERT INTO envio (codigo, destino, fecha_envio) VALUES ('ENV005', 'siria', '2023-08-01');
 
+INSERT INTO material (nombre, cantidad, envio_id) VALUES ('Alimentos', 1000, 1);
+INSERT INTO material (nombre, cantidad, envio_id) VALUES ('Medicamentos', 500, 2);
+INSERT INTO material (nombre, cantidad, envio_id) VALUES ('Ropa', 2000, 3);
+INSERT INTO material (nombre, cantidad, envio_id) VALUES ('Agua potable', 1500, 4);
+INSERT INTO material (nombre, cantidad, envio_id) VALUES ('Artículos de higiene', 1200, 5);
+INSERT INTO material (nombre, cantidad, envio_id) VALUES ('Kits de higiene', 300, 1);
+INSERT INTO material (nombre, cantidad, envio_id) VALUES ('Kits de primeros auxilios', 150, 2);
+INSERT INTO material (nombre, cantidad, envio_id) VALUES ('Tiendas de campaña', 50, 3);
+INSERT INTO material (nombre, cantidad, envio_id) VALUES ('Utensilios de cocina', 200, 4);
+INSERT INTO material (nombre, cantidad, envio_id) VALUES ('Lámparas solares', 100, 5);
+INSERT INTO material (nombre, cantidad, envio_id) VALUES ('Mantas térmicas', 500, 1);
+INSERT INTO material (nombre, cantidad, envio_id) VALUES ('Bidones de agua', 400, 2);
+INSERT INTO material (nombre, cantidad, envio_id) VALUES ('Mochilas de supervivencia', 350, 3);
+INSERT INTO material (nombre, cantidad, envio_id) VALUES ('Sacos de dormir', 100, 4);
+INSERT INTO material (nombre, cantidad, envio_id) VALUES ('Equipos de purificación de agua', 50, 5);
+
 -- Insertar datos en la tabla envio_sede
 INSERT INTO envio_sede (envio_id, sede_id) VALUES (1, 1);
 INSERT INTO envio_sede (envio_id, sede_id) VALUES (1, 2);

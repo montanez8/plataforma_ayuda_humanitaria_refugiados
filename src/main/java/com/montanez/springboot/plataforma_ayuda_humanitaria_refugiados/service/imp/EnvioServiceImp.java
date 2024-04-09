@@ -8,11 +8,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.EnvioDTO;
+import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.MaterialDTO;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_converter.EnvioDtoConverter;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.EnvioRepository;
+import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.MaterialRepository;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.SedeRepository;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.VoluntarioRepository;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.entities.Envio;
+import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.entities.Material;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.entities.Sede;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.entities.Voluntario;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.service.EnvioService;
@@ -26,6 +29,7 @@ public class EnvioServiceImp implements EnvioService {
         private EnvioRepository envioRepository;
         private SedeRepository sedeRepository;
         private VoluntarioRepository voluntarioRepository;
+        private MaterialRepository materialRepository;
         private EnvioDtoConverter converter;
 
         @Transactional(readOnly = true)
@@ -49,6 +53,12 @@ public class EnvioServiceImp implements EnvioService {
                                         dto.setVoluntariosIds(
                                                         envio.getVoluntarios().stream().map(Voluntario::getId)
                                                                         .collect(Collectors.toList()));
+                                        dto.setMateriales(envio.getMateriales().stream().map(material -> {
+                                                MaterialDTO materialDto = new MaterialDTO();
+                                                materialDto.setNombre(material.getNombre());
+                                                materialDto.setCantidad(material.getCantidad());
+                                                return materialDto;
+                                        }).collect(Collectors.toList()));
                                         return dto;
                                 });
         }
@@ -70,8 +80,19 @@ public class EnvioServiceImp implements EnvioService {
                                                                 "Voluntario con id " + voluntarioId
                                                                                 + " no encontrado")))
                                 .collect(Collectors.toList());
+                List<Material> materiales = envioDto.getMateriales().stream()
+                                .map(materialDto -> {
+                                        Material material = new Material();
+                                        material.setNombre(materialDto.getNombre());
+                                        material.setCantidad(materialDto.getCantidad());
+                                        material.setEnvio(envio);
+                                        return materialRepository.save(material);
+                                })
+                                .collect(Collectors.toList());
+
                 envio.setVoluntarios(voluntarios);
                 envio.setSedes(sedes);
+                envio.setMateriales(materiales);
                 Envio saveEnvio = envioRepository.save(envio);
                 return converter.convertToDto(saveEnvio);
         }
@@ -90,7 +111,6 @@ public class EnvioServiceImp implements EnvioService {
                                                         .orElseThrow(() -> new EntityNotFoundException(
                                                                         "Sede con id " + sedeId + " no encontrada")))
                                         .collect(Collectors.toList());
-                        envio.setSedes(sedes);
 
                         List<Long> distinctVoluntarios = envioDto.getVoluntariosIds().stream().distinct().toList();
                         List<Voluntario> voluntarios = distinctVoluntarios.stream()
@@ -99,10 +119,22 @@ public class EnvioServiceImp implements EnvioService {
                                                                         "Voluntario con id " + voluntarioId
                                                                                         + " no encontrado")))
                                         .collect(Collectors.toList());
+
+                        List<Material> materiales = envioDto.getMateriales().stream()
+                                        .map(materialDto -> {
+                                                Material material = new Material();
+                                                material.setNombre(materialDto.getNombre());
+                                                material.setCantidad(materialDto.getCantidad());
+                                                material.setEnvio(envio);
+                                                return materialRepository.save(material);
+                                        })
+                                        .collect(Collectors.toList());
+
                         envio.setVoluntarios(voluntarios);
+                        envio.setSedes(sedes);
+                        envio.setMateriales(materiales);
 
                         Envio updatedEnvio = envioRepository.save(envio);
-
                         return converter.convertToDto(updatedEnvio);
                 });
         }
@@ -110,6 +142,12 @@ public class EnvioServiceImp implements EnvioService {
         @Override
         public Optional<String> delete(Long id) {
                 return envioRepository.findById(id).map(envio -> {
+                        // Primero, borra los materiales relacionados
+                        List<Material> materiales = envio.getMateriales();
+                        for (Material material : materiales) {
+                                materialRepository.delete(material);
+                        }
+
                         envioRepository.delete(envio);
                         return "Envio con id " + id + " eliminado correctamente";
                 })

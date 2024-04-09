@@ -3,11 +3,13 @@ package com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto;
 import java.time.LocalDate;
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+@Schema(description = "Modelo de datos para los envíos")
 @Data
 public class EnvioDTO {
     private Long id;
@@ -20,4 +22,5 @@ public class EnvioDTO {
     private LocalDate fechaEnvio;
     private List<Long> sedesIds;
     private List<Long> voluntariosIds;
+    private List<MaterialDTO> materiales;
 }

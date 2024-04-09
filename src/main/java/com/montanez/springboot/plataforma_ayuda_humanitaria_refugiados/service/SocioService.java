@@ -18,7 +18,5 @@ public interface SocioService {
 
     Optional<String> delete(Long id);
 
-    List<SocioDTO> findByTipoCuota(Cuota tipoCuota);
-
     Optional<List<SocioDTO>> findByTipoCuota(String tipoCuota);
 }
