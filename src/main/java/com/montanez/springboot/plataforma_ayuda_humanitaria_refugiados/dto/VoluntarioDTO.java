@@ -18,6 +18,7 @@ public class VoluntarioDTO {
     private boolean disponibilidad;
     @NotEmpty(message = "El número de trabajos no puede estar vacío")
     private int numeroTrabajos;
+
     private List<Long> sedes;
 
 }

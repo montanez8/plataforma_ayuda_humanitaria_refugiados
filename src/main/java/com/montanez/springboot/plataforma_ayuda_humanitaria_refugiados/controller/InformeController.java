@@ -3,6 +3,7 @@ package com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.controll
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 
 @RestController
+@PreAuthorize("hasRole('ADMIN') or hasRole('ROLE_DIRECTOR') or hasRole('ROLE_AUXILIAR')")
 @RequestMapping("/api/informes")
 @AllArgsConstructor
 public class InformeController {
@@ -46,14 +48,14 @@ public class InformeController {
     }
 
     @GetMapping("/materiales")
-    @Operation(summary = "Informe Materiales", description = "Informe de los materiales y su cantidad")
+    @Operation(summary = "Informe Materiales", description = "Informe de ayuda Material , Cantidad, Peso")
     public ResponseEntity<List<InformeEnvioMaterialDto>> obtenerInformeMateriales() {
         List<InformeEnvioMaterialDto> informe = informeService.informeMaterial();
         return ResponseEntity.ok(informe);
     }
 
     @GetMapping("/envios")
-    @Operation(summary = "Informe Envios", description = "Informe de los envios y su destino voluntarios")
+    @Operation(summary = "Informe Envios", description = "Informe de los envios y sus datos (destino , fecha envio , voluntarios)")
     public ResponseEntity<List<InformeEvoluntarioDto>> obtenerInformeEnvios() {
         List<InformeEvoluntarioDto> informe = informeService.informeEvoluntarios();
         return ResponseEntity.ok(informe);

@@ -17,4 +17,7 @@ public interface VoluntarioService {
     Optional<String> delete(Long id);
 
     VoluntarioDTO findVoluntarioById(Long id);
+
+    List<VoluntarioDTO> findByProfesionAndSede(String profesion, Long sedeId);
+
 }

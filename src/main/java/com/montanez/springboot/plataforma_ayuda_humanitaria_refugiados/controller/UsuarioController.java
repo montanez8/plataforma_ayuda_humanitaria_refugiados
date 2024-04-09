@@ -26,12 +26,13 @@ import lombok.AllArgsConstructor;
 public class UsuarioController {
     private UsuarioService usuarioService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping // http://localhost:8080/api/usuario
     public List<Usuario> list() {
         return usuarioService.findAll();
     }
 
-    @PreAuthorize("hasRole('ADMIN')") // .hasAnyRole("ADMIN", "USER")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<?> create(@Valid @RequestBody Usuario user,
             BindingResult result) {

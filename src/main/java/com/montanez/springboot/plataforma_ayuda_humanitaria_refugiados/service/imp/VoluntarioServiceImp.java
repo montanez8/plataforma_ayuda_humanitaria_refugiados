@@ -92,4 +92,13 @@ public class VoluntarioServiceImp implements VoluntarioService {
                 .map(voluntario -> converter.convertToDto(voluntario))
                 .orElseThrow(() -> new EntityNotFoundException("Voluntario con id " + id + " no encontrado"));
     }
+
+    @Transactional(readOnly = true)
+    public List<VoluntarioDTO> findByProfesionAndSede(String profesion, Long sedeId) {
+        List<Voluntario> voluntarios = voluntarioRepository.findByProfesionAndSedesId(profesion, sedeId);
+        return voluntarios.stream()
+                .map(voluntario -> converter.convertToDto(voluntario))
+                .collect(Collectors.toList());
+    }
+
 }
