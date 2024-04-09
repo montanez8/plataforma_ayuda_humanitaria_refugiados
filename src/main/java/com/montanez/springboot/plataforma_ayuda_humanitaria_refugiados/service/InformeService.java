@@ -3,6 +3,7 @@ package com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.service;
 import java.util.List;
 
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_informes.InformeEnvioMaterialDto;
+import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_informes.InformeEvoluntarioDto;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_informes.InformeSedeDto;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_informes.InformeSocioDto;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_informes.InformeVoluntarioDto;
@@ -15,4 +16,6 @@ public interface InformeService {
     List<InformeVoluntarioDto> informeVoluntarios();
 
     List<InformeEnvioMaterialDto> informeMaterial();
+
+    List<InformeEvoluntarioDto> informeEvoluntarios();
 }

@@ -6,12 +6,16 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.MaterialDTO;
+import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_converter.VoluntarioDtoConverter;
+import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_converter.dto_converter_informes.InVoEnDtoConverter;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_converter.dto_converter_informes.InformeSedeDtoConverter;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_converter.dto_converter_informes.InformeSocioDtoConverter;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_converter.dto_converter_informes.InformeVoluntarioDtoConverter;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_informes.InformeEnvioMaterialDto;
+import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_informes.InformeEvoluntarioDto;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_informes.InformeSedeDto;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_informes.InformeSocioDto;
+import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_informes.InformeVoluntEnvioDto;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_informes.InformeVoluntarioDto;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.EnvioRepository;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.SedeRepository;
@@ -36,6 +40,8 @@ public class InformeServiceImp implements InformeService {
     private InformeSocioDtoConverter converter;
     private InformeSedeDtoConverter informeSedeDtoConverter;
     private InformeVoluntarioDtoConverter informeVoluntarioDtoConverter;
+    private VoluntarioDtoConverter voluntarioDtoConverter;
+    private InVoEnDtoConverter inVoEnDtoConverter;
 
     @Override
     public List<InformeSocioDto> informeSocios() {
@@ -83,6 +89,28 @@ public class InformeServiceImp implements InformeService {
                 })
                 .collect(Collectors.toList());
 
+    }
+
+    @Override
+    public List<InformeEvoluntarioDto> informeEvoluntarios() {
+        List<Envio> envios = envioRepository.findAll();
+
+        return envios.stream()
+                .map(envio -> {
+                    InformeEvoluntarioDto dto = new InformeEvoluntarioDto();
+                    dto.setCodigo(envio.getCodigo());
+                    dto.setDestino(envio.getDestino());
+                    dto.setFechaEnvio(envio.getFechaEnvio());
+                    dto.setNumeroVoluntarios(envio.getVoluntarios().size());
+
+                    List<InformeVoluntEnvioDto> voluntarios = envio.getVoluntarios().stream()
+                            .map(inVoEnDtoConverter::convertToDto)
+                            .collect(Collectors.toList());
+
+                    dto.setVoluntarios(voluntarios);
+                    return dto;
+                })
+                .collect(Collectors.toList());
     }
 
 }
