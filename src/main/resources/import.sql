@@ -25,14 +25,33 @@ INSERT INTO voluntario (nombre, tipo_voluntario, profesion, disponibilidad, nume
 INSERT INTO voluntario (nombre, tipo_voluntario, profesion, disponibilidad, numero_trabajos) VALUES ('Yurley Galvis', 'ADMINISTRATIVO', 'contadora', true, 2);
 INSERT INTO voluntario (nombre, tipo_voluntario, profesion, disponibilidad, numero_trabajos) VALUES ('Maria Ochoa', 'SANITARIO', 'psicologa', false, 6);
 
+-- Insertar datos en la tabla Refugio
+INSERT INTO refugio (nombre, ubicacion) VALUES ('Refugio de Emergencia Zaatari', 'Jordania');
+INSERT INTO refugio (nombre, ubicacion) VALUES ('Refugio Dadaab', 'Kenia');
+INSERT INTO refugio (nombre, ubicacion) VALUES ('Campamento de refugiados de Kakuma', 'Kenia');
+INSERT INTO refugio (nombre, ubicacion) VALUES ('Asentamiento de refugiados de Yida', 'Sudán del Sur');
+INSERT INTO refugio (nombre, ubicacion) VALUES ('Campamento de refugiados de Dzaleka', 'Malawi');
+INSERT INTO refugio (nombre, ubicacion) VALUES ('Refugio de Maheba', 'República Centroafricana');
+INSERT INTO refugio (nombre, ubicacion) VALUES ('Refugio de Emergencia de Moria', 'Grecia');
+INSERT INTO refugio (nombre, ubicacion) VALUES ('Refugio de Emergencia de Bidibidi', 'Uganda');
+INSERT INTO refugio (nombre, ubicacion) VALUES ('Refugio de Emergencia de Kutupalong', 'Bangladés');
+INSERT INTO refugio (nombre, ubicacion) VALUES ('Refugio de Emergencia de Domiz', 'Iraq');
+INSERT INTO refugio (nombre, ubicacion) VALUES ('Refugio de Emergencia de Maiwut', 'Sudán del Sur');
+
+
 
 
 -- Insertar datos en la tabla Envio
-INSERT INTO envio (codigo, destino, fecha_envio) VALUES ('ENV001', 'Kenia', '2023-04-10');
-INSERT INTO envio (codigo, destino, fecha_envio) VALUES ('ENV002', 'Uganda', '2023-05-20');
-INSERT INTO envio (codigo, destino, fecha_envio) VALUES ('ENV003', 'Grecia', '2023-06-15');
-INSERT INTO envio (codigo, destino, fecha_envio) VALUES ('ENV004', 'Sudán del Sur', '2023-07-05');
-INSERT INTO envio (codigo, destino, fecha_envio) VALUES ('ENV005', 'siria', '2023-08-01');
+INSERT INTO envio (codigo, destino, fecha_envio,refugio_id) VALUES ('ENV001', 'Kenia', '2023-04-10',3);
+INSERT INTO envio (codigo, destino, fecha_envio,refugio_id) VALUES ('ENV002', 'Kenia', '2023-05-20',2);
+INSERT INTO envio (codigo, destino, fecha_envio,refugio_id) VALUES ('ENV003', 'Grecia', '2023-06-15',1);
+INSERT INTO envio (codigo, destino, fecha_envio,refugio_id) VALUES ('ENV004', 'Sudán del Sur', '2023-07-05',4);
+INSERT INTO envio (codigo, destino, fecha_envio,refugio_id) VALUES ('ENV005', 'siria', '2023-08-01',5);
+INSERT INTO envio (codigo, destino, fecha_envio,refugio_id) VALUES ('ENV006', 'Bangladés', '2023-09-10',6);
+INSERT INTO envio (codigo, destino, fecha_envio,refugio_id) VALUES ('ENV007', 'Iraq', '2023-10-20',7);
+INSERT INTO envio (codigo, destino, fecha_envio,refugio_id) VALUES ('ENV008', 'Arabia Saudita', '2023-11-15',8);
+INSERT INTO envio (codigo, destino, fecha_envio,refugio_id) VALUES ('ENV009', 'Sudán del Sur', '2023-12-05',9);
+INSERT INTO envio (codigo, destino, fecha_envio,refugio_id) VALUES ('ENV010', 'Siria', '2024-01-01',10);
 
 INSERT INTO material (nombre, cantidad, envio_id) VALUES ('Alimentos', 1000, 1);
 INSERT INTO material (nombre, cantidad, envio_id) VALUES ('Medicamentos', 500, 2);

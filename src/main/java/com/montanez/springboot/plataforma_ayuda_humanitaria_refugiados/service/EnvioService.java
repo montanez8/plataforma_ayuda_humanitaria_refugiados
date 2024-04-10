@@ -7,7 +7,7 @@ import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.Envio
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.entities.Envio;
 
 public interface EnvioService {
-    List<Envio> findAll();
+    List<EnvioDTO> findAll();
 
     Optional<EnvioDTO> findById(Long id);
 
