@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +14,7 @@ import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.Mater
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.RefugioDto;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_converter.EnvioDtoConverter;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_converter.RefugioDtoConverter;
+import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.rabbit_mq.ShipmentCreatedEvent;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.EnvioRepository;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.MaterialRepository;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.RefugioRepository;
@@ -37,6 +40,8 @@ public class EnvioServiceImp implements EnvioService {
         private MaterialRepository materialRepository;
         private EnvioDtoConverter converter;
         private RefugioDtoConverter refugioDtoConverter;
+        private RabbitTemplate rabbitTemplate;
+        private MongoTemplate mongoTemplate;
 
         @Transactional(readOnly = true)
         @Override
@@ -128,7 +133,11 @@ public class EnvioServiceImp implements EnvioService {
                 envio.setSedes(sedes);
                 envio.setMateriales(materiales);
                 Envio saveEnvio = envioRepository.save(envio);
-                return converter.convertToDto(saveEnvio);
+                EnvioDTO saEnvioDTO = converter.convertToDto(saveEnvio);
+                ShipmentCreatedEvent event = new ShipmentCreatedEvent(saEnvioDTO);
+                rabbitTemplate.convertAndSend("colaEnvio", event);
+                mongoTemplate.save(event);
+                return saEnvioDTO;
         }
 
         @Override
@@ -185,7 +194,7 @@ public class EnvioServiceImp implements EnvioService {
         @Override
         public Optional<String> delete(Long id) {
                 return envioRepository.findById(id).map(envio -> {
-                        // Primero, borra los materiales relacionados
+
                         List<Material> materiales = envio.getMateriales();
                         for (Material material : materiales) {
                                 materialRepository.delete(material);

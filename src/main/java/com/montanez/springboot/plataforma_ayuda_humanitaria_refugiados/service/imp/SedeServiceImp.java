@@ -3,6 +3,7 @@ package com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.service.
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,12 +14,12 @@ import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repositor
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.service.SedeService;
 
 import jakarta.persistence.EntityNotFoundException;
-import lombok.AllArgsConstructor;
 
 @Service
-@AllArgsConstructor
 public class SedeServiceImp implements SedeService {
+    @Autowired
     private SedeRepository sedeRepository;
+    @Autowired
     private SedeDtoConverter converter;
 
     @Transactional(readOnly = true)

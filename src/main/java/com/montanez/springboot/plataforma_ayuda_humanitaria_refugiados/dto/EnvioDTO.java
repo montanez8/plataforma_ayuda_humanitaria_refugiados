@@ -1,9 +1,8 @@
 package com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
-
-import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.entities.Refugio;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.FutureOrPresent;
@@ -13,7 +12,8 @@ import lombok.Data;
 
 @Schema(description = "Modelo de datos para los envíos")
 @Data
-public class EnvioDTO {
+public class EnvioDTO implements Serializable {
+    private static final long serialVersionUID = 1L;
     private Long id;
     @NotEmpty(message = "El código no puede estar vacío")
     private String codigo;

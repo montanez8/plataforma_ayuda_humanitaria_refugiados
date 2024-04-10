@@ -1,22 +1,12 @@
 package com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.service.imp;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Service;
-
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.MaterialDTO;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_converter.VoluntarioDtoConverter;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_converter.dto_converter_informes.InVoEnDtoConverter;
-import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_converter.dto_converter_informes.InformeSedeDtoConverter;
-import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_converter.dto_converter_informes.InformeSocioDtoConverter;
-import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_converter.dto_converter_informes.InformeVoluntarioDtoConverter;
-import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_informes.InformeEnvioMaterialDto;
-import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_informes.InformeEvoluntarioDto;
-import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_informes.InformeSedeDto;
-import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_informes.InformeSocioDto;
-import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_informes.InformeVoluntEnvioDto;
-import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_informes.InformeVoluntarioDto;
+import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_converter.dto_converter_informes.InformeSDtoConverter;
+import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_converter.dto_converter_informes.InformeVDtoConverter;
+import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_converter.dto_converter_informes.IsedeDtoConverter;
+import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.dto.dto_informes.*;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.EnvioRepository;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.SedeRepository;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.SocioRepository;
@@ -26,8 +16,11 @@ import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repositor
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.entities.Socio;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.repository.entities.Voluntario;
 import com.montanez.springboot.plataforma_ayuda_humanitaria_refugiados.service.InformeService;
-
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -37,9 +30,9 @@ public class InformeServiceImp implements InformeService {
     private SedeRepository sedeRepository;
     private VoluntarioRepository voluntarioRepository;
     private EnvioRepository envioRepository;
-    private InformeSocioDtoConverter converter;
-    private InformeSedeDtoConverter informeSedeDtoConverter;
-    private InformeVoluntarioDtoConverter informeVoluntarioDtoConverter;
+    private InformeSDtoConverter converter;
+    private IsedeDtoConverter isedeDtoConverter;
+    private InformeVDtoConverter informeVDtoConverter;
     private VoluntarioDtoConverter voluntarioDtoConverter;
     private InVoEnDtoConverter inVoEnDtoConverter;
 
@@ -54,7 +47,7 @@ public class InformeServiceImp implements InformeService {
     public List<InformeSedeDto> informeSedes() {
         List<Sede> sedes = sedeRepository.findAll();
         return sedes.stream()
-                .map(informeSedeDtoConverter::convertToDto)
+                .map(isedeDtoConverter::convertToDto)
                 .collect(Collectors.toList());
     }
 
@@ -62,7 +55,7 @@ public class InformeServiceImp implements InformeService {
     public List<InformeVoluntarioDto> informeVoluntarios() {
         List<Voluntario> voluntarios = voluntarioRepository.findAll();
         return voluntarios.stream()
-                .map(informeVoluntarioDtoConverter::convertToDto)
+                .map(informeVDtoConverter::convertToDto)
                 .collect(Collectors.toList());
     }
 
