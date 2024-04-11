@@ -4,21 +4,20 @@ Este proyecto es una API RESTful desarrollada con Spring Boot para administrar u
 
 ## **Tabla de Contenidos 📚**
 
-1. [Problema](#1-problema-🔥)
-2. [Solución](#2-solución-🏆)
-3. [Requisitos Funcionales](#3-requisitos-funcionales)
-4. [Informes](#4-informes)
-5. [Gestión de Envíos de Ayuda](#5-gestión-de-envíos-de-ayuda)
-6. [Rabbit](#6-opcional---rabbit)
-7. [Instalación y Uso](#7-instalación-y-uso)
+1.
+3. [Requisitos Funcionales](#1-requisitos-funcionales)
+4. [Informes](#2-informes)
+5. [Gestión de Envíos de Ayuda](#3-gestión-de-envíos-de-ayuda)
+6. [Rabbit](#4-opcional---rabbit)
+7. [Instalación y Uso](#5-instalación-y-uso)
 
-## **3. Requisitos Funcionales 📋**
+## **1. Requisitos Funcionales 📋**
 
 - **Gestión de Socios:** Registrar, consultar, actualizar, eliminar y listar socios por tipo de cuota.
 - **Gestión de Sedes:** Registrar, consultar, actualizar, eliminar y listar sedes.
 - **Gestión de Voluntarios:** Registrar, consultar, actualizar, eliminar y listar voluntarios por profesión y sede.
 
-## **4. Informes 📊**
+## **2. Informes 📊**
 
 - **Informe de Cuotas de Socios**
 - **Informe de Sedes y Directores**
@@ -26,16 +25,16 @@ Este proyecto es una API RESTful desarrollada con Spring Boot para administrar u
 - **Informe de Envíos de Ayuda Material**
 - **Informe de Envíos de Ayuda Humanitaria**
 
-## **5. Gestión de Envíos de Ayuda 📦**
+## **3. Gestión de Envíos de Ayuda 📦**
 
 - Crear un nuevo envío: datos del envío, id de refugio, detalles del envío y sedes.
 - Obtener un envío por id: datos del envío, detalles del envío, datos completos del refugio y datos completos de las sedes.
 
-## **6. - Rabbit 🐰**
+## **4. - Rabbit 🐰**
 
 Implementar una arquitectura de tipo event-driven utilizando RabbitMQ para gestionar las notificaciones de envío a los refugios.
 
-## **7. Instalación y Uso ⚙️**
+## **5. Instalación y Uso ⚙️**
 
 **Requisitos previos:**
 
@@ -77,7 +76,7 @@ Alternativamente, puedes ejecutar la aplicación directamente desde tu IDE hacie
 
 3. **Detén la aplicación**: Para detener la aplicación de Spring Boot, presiona `Ctrl+C` en la terminal donde se está ejecutando la aplicación, o haz clic en el botón de detener en tu IDE.
 
-## **8. Documentación 📝**
+## **6. Documentación 📝**
 
 La documentación de la API está disponible a través de Swagger, una herramienta de documentación de código abierto para APIs RESTful. Puedes acceder a la documentación de la API mientras la aplicación está en ejecución, visitando el siguiente enlace en tu navegador:
 
