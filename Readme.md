@@ -49,9 +49,7 @@ Implementar una arquitectura de tipo event-driven utilizando RabbitMQ para gesti
 
 ```bash
 git clone https://github.com/montanez8/plataforma_ayuda_humanitaria_refugiados.git
-```
-
-Reemplaza `tu-usuario` y `tu-repositorio` con los valores correspondientes a tu proyecto.
+``
 
 2. **Importa el proyecto**: Importa el proyecto clonado en tu IDE preferido. Si estás utilizando IntelliJ IDEA, sigue estos pasos:
    1. Abre IntelliJ IDEA y haz clic en `File` > `New` > `Project from Version Control`.
