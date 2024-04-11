@@ -9,7 +9,7 @@ Este proyecto es una API RESTful desarrollada con Spring Boot para administrar u
 3. [Requisitos Funcionales](#3-requisitos-funcionales)
 4. [Informes](#4-informes)
 5. [Gestión de Envíos de Ayuda](#5-gestión-de-envíos-de-ayuda)
-6. [Opcional - Rabbit](#6-opcional---rabbit)
+6. [Rabbit](#6-opcional---rabbit)
 7. [Instalación y Uso](#7-instalación-y-uso)
 
 ## **3. Requisitos Funcionales 📋**
