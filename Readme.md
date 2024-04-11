@@ -4,12 +4,11 @@ Este proyecto es una API RESTful desarrollada con Spring Boot para administrar u
 
 ## **Tabla de Contenidos 📚**
 
-1.
-3. [Requisitos Funcionales](#1-requisitos-funcionales)
-4. [Informes](#2-informes)
-5. [Gestión de Envíos de Ayuda](#3-gestión-de-envíos-de-ayuda)
-6. [Rabbit](#4-opcional---rabbit)
-7. [Instalación y Uso](#5-instalación-y-uso)
+1. [Requisitos Funcionales](#1-requisitos-funcionales)
+2. [Informes](#2-informes)
+3. [Gestión de Envíos de Ayuda](#3-gestión-de-envíos-de-ayuda)
+4. [Rabbit](#4-opcional---rabbit)
+5. [Instalación y Uso](#5-instalación-y-uso)
 
 ## **1. Requisitos Funcionales 📋**
 
@@ -48,7 +47,7 @@ Implementar una arquitectura de tipo event-driven utilizando RabbitMQ para gesti
 
 ```bash
 git clone https://github.com/montanez8/plataforma_ayuda_humanitaria_refugiados.git
-``
+```
 
 2. **Importa el proyecto**: Importa el proyecto clonado en tu IDE preferido. Si estás utilizando IntelliJ IDEA, sigue estos pasos:
    1. Abre IntelliJ IDEA y haz clic en `File` > `New` > `Project from Version Control`.
